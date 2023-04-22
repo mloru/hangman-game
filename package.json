@@ -4,7 +4,7 @@
   "description": "Hangman is a simple game that revolves around guessing a randomly chosen word.",
   "main": "index.js",
   "scripts": {
-    "test": "jest"
+    "cypress:open": "cypress open"
   },
   "repository": {
     "type": "git",
@@ -13,10 +13,10 @@
   "author": "Mirko Lorusso",
   "license": "GPL-3.0-or-later",
   "bugs": {
-    "url": "https://github.com/mloru/hangman-game/issues"
+"url": "https://github.com/mloru/hangman-game/issues"
   },
   "homepage": "https://github.com/mloru/hangman-game#readme",
   "devDependencies": {
-    "jest": "^29.5.0"
+    "cypress": "^12.10.0"
   }
 }
