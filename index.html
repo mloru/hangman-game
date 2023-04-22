@@ -49,9 +49,9 @@
     <!--                </div>-->
     <!--            </div>-->
         <div class="centered"
-             x-data="{wordToBeGuessed: 'ciao'}">
+             x-data="{ wordToBeGuessed: 'ciao' }">
             <template x-for="char in wordToBeGuessed">
-                <span x-data="{hidden:true}">
+                <span x-data="{ hidden:true }">
                         <span class="char"
                               x-show="hidden"
                               x-text="hiddenChar(char)"></span>
