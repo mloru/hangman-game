@@ -22,32 +22,6 @@
     </style>
 </head>
     <body>
-    <!--            <span x-for="char in wordToBeGuessed"-->
-    <!--                  x-data="{-->
-    <!--                    hidden: true-->
-    <!--                  }">-->
-    <!--                <span x-if="hidden"-->
-    <!--                      x-text="hiddenChar(char)">-->
-    <!--                </span>-->
-    <!--                <span x-if="!hidden"-->
-    <!--                      x-text="char">-->
-    <!--                </span>-->
-    <!--            </span>-->
-    <!--                <span x-for="char in wordToBeGuessed"-->
-    <!--                      x-data="{-->
-    <!--                        hidden: true-->
-    <!--                      }">-->
-    <!--                     <span x-text="char"></span>-->
-    <!--                </span>-->
-    <!--            <div x-data="{ foo: 'bar' }">-->
-    <!--                <span x-text="foo">&lt;!&ndash; Will output: "bar" &ndash;&gt;</span>-->
-    <!--                <div x-data="{ bar: 'baz' }">-->
-    <!--                    <span x-text="foo">&lt;!&ndash; Will output: "bar" &ndash;&gt;</span>-->
-    <!--                    <div x-data="{ foo: 'bob' }">-->
-    <!--                        <span x-text="foo">&lt;!&ndash; Will output: "bob" &ndash;&gt;</span>-->
-    <!--                    </div>-->
-    <!--                </div>-->
-    <!--            </div>-->
         <div class="centered"
              x-data="{ wordToBeGuessed: 'ciao' }">
             <template x-for="char in wordToBeGuessed">
