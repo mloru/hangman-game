@@ -23,7 +23,7 @@
 </head>
     <body>
         <div class="centered"
-             x-data="{ wordToBeGuessed: generateWord() }">
+             x-data="{ wordToBeGuessed: generateWordToBeGuessed() }">
             <template x-for="char in wordToBeGuessed">
                 <span x-data="{ hidden:true }">
                         <span class="char"
@@ -37,7 +37,7 @@
         </div>
     </body>
     <script>
-        function generateWordToGuess() {
+        function generateWordToBeGuessed() {
             let words = [
                 'andare',
                 'ape',

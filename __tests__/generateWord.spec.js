@@ -1,8 +1,8 @@
 describe("Word generation", () => {
     test("it should generate a word to guess", () => {
-        const outputType = "string"
+        const outputType = "string";
 
-        expect(generateWordToGuess()).toBeInstanceOf(outputType);
-        expect(generateWordToGuess()).length.toBeGreaterThan(0);
+        expect(generateWordToBeGuessed()).toBeInstanceOf(outputType);
+        expect(generateWordToBeGuessed()).length.toBeGreaterThan(0);
     });
 });
