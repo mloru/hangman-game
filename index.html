@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Hangman game</title>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <style>
+        div.centered {
+            position: absolute;
+            border: 3px solid red;
+            padding: 10px;
+            top: 50%;
+            left: 50%;
+        }
+
+        span.char {
+            margin-right: 1px;
+        }
+    </style>
+</head>
+    <body>
+        <div class="centered"
+             x-data="{ wordToBeGuessed: generateWordToBeGuessed() }">
+            <template x-for="char in wordToBeGuessed">
+                <span x-data="{ hidden:true }">
+                        <span class="char"
+                              x-show="hidden"
+                              x-text="hiddenChar(char)"></span>
+                        <span class="char"
+                              x-show="!hidden"
+                              x-text="char"></span>
+                </span>
+            </template>
+        </div>
+    </body>
+    <script>
+        function generateWordToBeGuessed() {
+            let words = [
+                'andare',
+                'ape',
+                'arbusto',
+                'artiglio',
+                'automobile',
+                'bello',
+                'bistecca',
+                'campana',
+                'cane',
+                'cespuglio',
+                'ciao',
+                'cilecca',
+                'ciliegia',
+                'confetto',
+                'coniglio',
+                'correre',
+                'cupola',
+                'era',
+                'finestra',
+                'gatto',
+                'gelato',
+                'maestro',
+                'mare',
+                'minestra',
+                'pane',
+                'pollo',
+                'rane',
+                'sazio',
+                'software',
+                'tempo',
+            ];
+
+            let index = Math.floor(Math.random() * words.length);
+            return words[index];
+        }
+
+        function hiddenChar(char) {
+            return '_';
+        }
+    </script>
+</html>
