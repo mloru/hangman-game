@@ -23,7 +23,7 @@
 </head>
     <body>
         <div class="centered"
-             x-data="{ wordToBeGuessed: 'ciao' }">
+             x-data="{ wordToBeGuessed: generateWord() }">
             <template x-for="char in wordToBeGuessed">
                 <span x-data="{ hidden:true }">
                         <span class="char"
@@ -37,6 +37,44 @@
         </div>
     </body>
     <script>
+        function generateWord() {
+            let words = [
+                'andare',
+                'ape',
+                'arbusto',
+                'artiglio',
+                'automobile',
+                'bello',
+                'bistecca',
+                'campana',
+                'cane',
+                'cespuglio',
+                'ciao',
+                'cilecca',
+                'ciliegia',
+                'confetto',
+                'coniglio',
+                'correre',
+                'cupola',
+                'era',
+                'finestra',
+                'gatto',
+                'gelato',
+                'maestro',
+                'mare',
+                'minestra',
+                'pane',
+                'pollo',
+                'rane',
+                'sazio',
+                'software',
+                'tempo',
+            ];
+
+            let index = Math.floor(Math.random() * words.length);
+            return words[index];
+        }
+
         function hiddenChar(char) {
             return '_';
         }
