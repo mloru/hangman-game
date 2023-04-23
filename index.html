@@ -19,6 +19,10 @@
         span.char {
             margin-right: 1px;
         }
+
+        input.invalid {
+            border: 2px solid red;
+        }
     </style>
 </head>
     <body>
@@ -53,6 +57,27 @@
         </div>
     </body>
     <script>
+        let input = document.querySelector('input.guess')
+
+        document.querySelector('button#confirmGuess')
+                .addEventListener(
+                    'click',
+                    function (e) {
+                        let inputIsValid = input.value.toLower >= 'a' && input.value.toLower <= 'z'
+
+                        if (!inputIsValid) {
+                            input.classList.add('invalid')
+                        }
+                    }
+        )
+
+        input.addEventListener(
+            'keyup',
+            function () {
+                input.classList.remove('invalid')
+            }
+        )
+
         function generateWordToBeGuessed() {
             let words = [
                 'andare',

@@ -10,3 +10,28 @@ it('asks for a character guess', () => {
       .next('button[type="button"]#confirmGuess')
       .contains('Confirm')
 })
+
+describe('handles invalid characters', () => {
+  it('reports an error if guess is an invalid character', () => {
+    cy.visit('/')
+        .get('input.guess')
+        .type('1')
+        .get('button[type="button"]#confirmGuess')
+        .click()
+        .get('input.guess')
+        .should('have.css', 'border')
+        .should('include', '2px solid rgb(255, 0, 0)')
+  })
+
+  it('removes the error class when the user changes the input', () => {
+    cy.visit('/')
+        .get('input.guess')
+        .clear()
+        .should('not.have.css', 'border: 2px solid rgb(255, 0, 0)')
+
+    cy.visit('/')
+        .get('input.guess')
+        .type('a')
+        .should('not.have.css', 'border: 2px solid rgb(255, 0, 0)')
+  })
+})
