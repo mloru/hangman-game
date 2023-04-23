@@ -24,16 +24,20 @@
     <body>
         <div class="centered"
              x-data="{ wordToBeGuessed: generateWordToBeGuessed() }">
-            <template x-for="char in wordToBeGuessed">
-                <span x-data="{ hidden:true }">
-                        <span class="char"
-                              x-show="hidden"
-                              x-text="hiddenChar(char)"></span>
-                        <span class="char"
-                              x-show="!hidden"
-                              x-text="char"></span>
-                </span>
-            </template>
+            <div id="word">
+                <template x-for="char in wordToBeGuessed">
+                    <span x-data="{ hidden:true }">
+                            <span class="char"
+                                  x-show="hidden"
+                                  x-text="hiddenChar(char)">
+                            </span>
+                            <span class="char"
+                                  x-show="!hidden"
+                                  x-text="char">
+                            </span>
+                    </span>
+                </template>
+            </div>
         </div>
     </body>
     <script>
