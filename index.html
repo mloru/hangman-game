@@ -30,15 +30,9 @@
              x-data="{ wordToBeGuessed: generateWordToBeGuessed() }">
             <div id="word">
                 <template x-for="char in wordToBeGuessed">
-                    <span x-data="{ hidden:true }">
-                            <span class="char"
-                                  x-show="hidden"
-                                  x-text="hiddenChar(char)">
-                            </span>
-                            <span class="char"
-                                  x-show="!hidden"
-                                  x-text="char">
-                            </span>
+                    <span class="char"
+                          x-data="character"
+                          x-text="hidden ? hiddenChar(char) : char">
                     </span>
                 </template>
             </div>
@@ -121,6 +115,13 @@
 
         function hiddenChar(char) {
             return '_';
+        }
+
+        function character() {
+            return {
+                hidden: true,
+                show() { this.hidden = false }
+            }
         }
     </script>
 </html>
