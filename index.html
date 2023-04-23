@@ -52,15 +52,26 @@
     </body>
     <script>
         let input = document.querySelector('input.guess')
+        let wordToBeGuessed
 
         document.querySelector('button#confirmGuess')
                 .addEventListener(
                     'click',
-                    function (e) {
-                        let inputIsValid = input.value.toLower >= 'a' && input.value.toLower <= 'z'
+                    function () {
+                        let guess = input.value.toLowerCase()
+                        let inputIsValid = guess >= 'a' && guess <= 'z'
+                        let wordElement = document.querySelector('div#word')
 
                         if (!inputIsValid) {
                             input.classList.add('invalid')
+                            return
+                        }
+
+                        for (let i = 0; i < wordToBeGuessed.length; i++) {
+                            if(wordToBeGuessed[i] === guess) {
+                                let letterToShow = wordElement.getElementsByTagName('span').item(i)
+                                letterToShow.setAttribute('x-data', '{ hidden:false }')
+                            }
                         }
                     }
         )
@@ -110,7 +121,7 @@
                 Math.random() * words.length
             );
 
-            return words[index];
+            return wordToBeGuessed = words[index];
         }
 
         function hiddenChar(char) {
