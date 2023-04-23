@@ -37,12 +37,14 @@ describe('handles invalid characters', () => {
 })
 
 it('accepts valid guesses', () => {
+  let letter
+
   cy.visit('/')
       .get('div#word > span:first-of-type')
       .invoke('attr', 'x-data', '{ hidden:false }')
       .invoke('attr', 'x-data', '{ hidden:true }')
       .then(($el) => {
-        let letter = $el.text()
+        letter = $el.text()
         cy.get('input.guess')
             .type(letter)
       })
@@ -51,5 +53,5 @@ it('accepts valid guesses', () => {
       .click()
       .get('div#word > span:first-of-type')
       .should('have.attr', 'x-data', '{ hidden:false }')
-      // TODO: come asserire che l'innerHtml dell elemento è letter? Lo scope di letter é limitato alla closure sopra
+      .should('contain.text', letter)
 })
