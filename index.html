@@ -27,12 +27,17 @@
 </head>
     <body>
         <div class="centered"
-             x-data="{ word: $store.defaultStore.word }">
+             x-data="{ word: $store.store.word }">
             <div id="word">
                 <template x-for="(char, index) in word">
                     <span
                         class="char"
-                        x-data="charComponent()"
+                        x-data="{
+                            hidden: true,
+                            show() {
+                                this.hidden = false
+                            }
+                        }"
                         x-text="hidden ? hiddenChar(char) : char"
                         @showLetter-index="hidden=false">
                     </span>
@@ -52,32 +57,16 @@
             </div>
         </div>
     </body>
-
     <script>
+        let input = document.querySelector('input.guess')
+        let wordToBeGuessed
+
         document.addEventListener('alpine:init', () => {
-            Alpine.store('defaultStore', {
+            Alpine.store('store', {
                 word: generateWordToBeGuessed(),
                 status: initStatus(),
             })
         })
-
-        let input = document.querySelector('input.guess')
-        let wordToBeGuessed
-
-        let charComponent = () => {
-            return {
-                hidden: true,
-                show() {
-                    this.hidden = false
-                }
-            }
-        }
-
-        let wordComponent = () => {
-            return {
-                word: $store.defaultStore.word
-            }
-        }
 
         document.querySelector('button#confirmGuess')
                 .addEventListener(
@@ -153,7 +142,7 @@
         function initStatus() {
             let status = []
 
-            for (let i = 0; i < $store.defaultStore.word.length; i++) {
+            for (let i = 0; i < Alpine.store('store').word.length; i++) {
                 status[i] = 'hidden';
             }
 
