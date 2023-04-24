@@ -6,7 +6,6 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Hangman game</title>
-    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <style>
         div.centered {
             position: absolute;
@@ -24,22 +23,15 @@
             border: 2px solid red;
         }
     </style>
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
 </head>
     <body>
-        <div class="centered"
-             x-data="{ wordToBeGuessed: generateWordToBeGuessed() }">
+        <div class="centered">
             <div id="word">
-                <template x-for="(char, index) in wordToBeGuessed">
+                <template x-for="char in $store.defaultStore.hiddenWord">
                     <span
                         class="char"
-                        x-data="{
-                            hidden: true,
-                            show() {
-                                this.hidden = false
-                            }
-                        }"
-                        x-text="hidden ? hiddenChar(char) : char"
-                        @showLetter-index="hidden=false">
+                        x-html="char">
                     </span>
                 </template>
             </div>
@@ -58,29 +50,38 @@
         </div>
     </body>
     <script>
+        document.addEventListener('alpine:init', () => {
+            Alpine.store('defaultStore', {
+                word: generateWord(),
+                hiddenWord: '_____',
+                guess: '',
+                init() {
+                    this.hiddenWord = this.word.replace('^[A-Za-z]+', '_')
+                },
+            })
+        })
+    </script>
+    <script>
         let input = document.querySelector('input.guess')
-        let wordToBeGuessed
 
         document.querySelector('button#confirmGuess')
                 .addEventListener(
                     'click',
                     function () {
-                        let guess = input.value.toLowerCase()
-                        let inputIsValid = guess >= 'a' && guess <= 'z'
-                        let wordElement = document.querySelector('div#word')
+                        Alpine.store('defaultStore').guess = Alpine.store('defaultStore').guess.toLowerCase()
 
-                        if (!inputIsValid) {
+                        if (!(Alpine.store('defaultStore').guess >= 'a' && Alpine.store('defaultStore').guess <= 'z')) {
                             input.classList.add('invalid')
                             return
                         }
 
-                        for (let i = 0; i < wordToBeGuessed.length; i++) {
-                            if(wordToBeGuessed[i] === guess) {
-                                let letterToShow = wordElement.getElementsByTagName('span').item(i)
-                                let event = new Event('showLetter-' + i);
-                                letterToShow.dispatchEvent(event)
+                        for (let i = 0; i < Alpine.store('defaultStore').word.length; i++) {
+                            if(Alpine.store('defaultStore').word[i] === Alpine.store('defaultStore').guess) {
+                                Alpine.store('defaultStore').hiddenWord[i] = Alpine.store('defaultStore').word[i]
                             }
                         }
+
+                        Alpine.store('defaultStore').guess = ''
                     }
         )
 
@@ -91,7 +92,7 @@
             }
         )
 
-        function generateWordToBeGuessed() {
+        function generateWord() {
             let words = [
                 'andare',
                 'ape',
@@ -129,11 +130,7 @@
                 Math.random() * words.length
             );
 
-            return wordToBeGuessed = words[index];
-        }
-
-        function hiddenChar(char) {
-            return '_';
+            return words[index];
         }
     </script>
 </html>
