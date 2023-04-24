@@ -29,10 +29,17 @@
         <div class="centered"
              x-data="{ wordToBeGuessed: generateWordToBeGuessed() }">
             <div id="word">
-                <template x-for="char in wordToBeGuessed">
-                    <span class="char"
-                          x-data="character"
-                          x-text="hidden ? hiddenChar(char) : char">
+                <template x-for="(char, index) in wordToBeGuessed">
+                    <span
+                        class="char"
+                        x-data="{
+                            hidden: true,
+                            show() {
+                                this.hidden = false
+                            }
+                        }"
+                        x-text="hidden ? hiddenChar(char) : char"
+                        @showLetter-index="hidden=false">
                     </span>
                 </template>
             </div>
@@ -70,7 +77,8 @@
                         for (let i = 0; i < wordToBeGuessed.length; i++) {
                             if(wordToBeGuessed[i] === guess) {
                                 let letterToShow = wordElement.getElementsByTagName('span').item(i)
-                                letterToShow.setAttribute('x-data', '{ hidden:false }')
+                                let event = new Event('showLetter-' + i);
+                                letterToShow.dispatchEvent(event)
                             }
                         }
                     }
@@ -126,13 +134,6 @@
 
         function hiddenChar(char) {
             return '_';
-        }
-
-        function character() {
-            return {
-                hidden: true,
-                show() { this.hidden = false }
-            }
         }
     </script>
 </html>
