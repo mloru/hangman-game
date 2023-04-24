@@ -68,8 +68,6 @@
                 .addEventListener(
                     'click',
                     function () {
-                        Alpine.store('defaultStore').guess = Alpine.store('defaultStore').guess.toLowerCase()
-
                         if (!(Alpine.store('defaultStore').guess >= 'a' && Alpine.store('defaultStore').guess <= 'z')) {
                             input.classList.add('invalid')
                             return
@@ -89,6 +87,7 @@
             'keyup',
             function () {
                 input.classList.remove('invalid')
+                input.value = input.value.toLowerCase()
             }
         )
 
