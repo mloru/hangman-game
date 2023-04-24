@@ -6,7 +6,6 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Hangman game</title>
-    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <style>
         div.centered {
             position: absolute;
@@ -17,27 +16,86 @@
         }
 
         span.char {
-            margin-right: 1px;
+            margin-right: 4px;
+        }
+
+        input.invalid {
+            border: 2px solid red;
         }
     </style>
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
 </head>
     <body>
-        <div class="centered"
-             x-data="{ wordToBeGuessed: generateWordToBeGuessed() }">
-            <template x-for="char in wordToBeGuessed">
-                <span x-data="{ hidden:true }">
-                        <span class="char"
-                              x-show="hidden"
-                              x-text="hiddenChar(char)"></span>
-                        <span class="char"
-                              x-show="!hidden"
-                              x-text="char"></span>
-                </span>
-            </template>
+        <div class="centered">
+            <div id="word">
+                <template x-for="char in $store.defaultStore.hiddenWord">
+                    <!-- TODO: non si vedono piu i caratteri -->
+                    <span
+                        class="char"
+                        x-text="char">
+                    </span>
+                </template>
+            </div>
+            <div class="guess">
+                <div>What's your next guess?</div>
+                <div>
+                    <input class="guess"
+                           type="text"
+                           maxlength="1"
+                           x-model="$store.defaultStore.guess"
+                    />  <!-- TODO: questo x-model non sembra funzionare correttamente -->
+                    <button type="button"
+                            id="confirmGuess">
+                        Confirm
+                    </button>
+                </div>
+            </div>
         </div>
+        <input type="text" x-model="$store.defaultStore.hiddenWord">  <!-- TODO: messo solo per vedere la hiddenword -->
     </body>
     <script>
-        function generateWordToBeGuessed() {
+        document.addEventListener('alpine:init', () => {
+            Alpine.store('defaultStore', {
+                word: generateWord(),
+                hiddenWord: '',
+                guess: '',
+                init() {
+                    this.hiddenWord = this.word.replace(/^[A-Za-z]+/, '_')      // TODO: questa regex non funziona correttamente
+                },
+            })
+        })
+    </script>
+    <script>
+        let input = document.querySelector('input.guess')
+
+        document.querySelector('button#confirmGuess')
+                .addEventListener(
+                    'click',
+                    function () {
+                        if (!(Alpine.store('defaultStore').guess >= 'a' && Alpine.store('defaultStore').guess <= 'z')) {
+                            input.classList.add('invalid')
+                            return
+                        }
+
+                        for (let i = 0; i < Alpine.store('defaultStore').word.length; i++) {
+                            if(Alpine.store('defaultStore').word[i] === Alpine.store('defaultStore').guess) {
+                                Alpine.store('defaultStore').hiddenWord[i] = Alpine.store('defaultStore').word[i]
+                            }
+                        }
+
+                        Alpine.store('defaultStore').guess = ''
+                    }
+        )
+
+        input.addEventListener(
+            'keyup',
+            function () {
+                input.classList.remove('invalid')
+                input.value = input.value.toLowerCase()
+            }
+        )
+
+        function generateWord() {
             let words = [
                 'andare',
                 'ape',
@@ -71,12 +129,11 @@
                 'tempo',
             ];
 
-            let index = Math.floor(Math.random() * words.length);
-            return words[index];
-        }
+            let index = Math.floor(
+                Math.random() * words.length
+            );
 
-        function hiddenChar(char) {
-            return '_';
+            return words[index];
         }
     </script>
 </html>

@@ -8,11 +8,13 @@ describe('the word is hidden when the game starts', () => {
   it('should display the word hidden with underscores', () => {
     cy.visit('/')
         .get('div.centered')
+        .get('div#word')
         .contains('_')
         .should('be.visible')
 
     cy.visit('/')
         .get('div.centered')
+        .get('div#word')
         .invoke('text')
         .should('match', /(_)+/)
   })
