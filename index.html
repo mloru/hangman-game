@@ -41,7 +41,9 @@
                 <div>
                     <input class="guess"
                            type="text"
-                           maxlength="1" />
+                           maxlength="1"
+                           x-model="$store.defaultStore.guess"
+                    />  <!-- TODO: questo x-model non sembra funzionare correttamente -->
                     <button type="button"
                             id="confirmGuess">
                         Confirm
