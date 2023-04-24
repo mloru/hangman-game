@@ -29,9 +29,10 @@
         <div class="centered">
             <div id="word">
                 <template x-for="char in $store.defaultStore.hiddenWord">
+                    <!-- TODO: non si vedono piu i caratteri -->
                     <span
                         class="char"
-                        x-html="char">
+                        x-text="char">
                     </span>
                 </template>
             </div>
