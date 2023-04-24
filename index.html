@@ -53,10 +53,10 @@
         document.addEventListener('alpine:init', () => {
             Alpine.store('defaultStore', {
                 word: generateWord(),
-                hiddenWord: '_____',
+                hiddenWord: '',
                 guess: '',
                 init() {
-                    this.hiddenWord = this.word.replace('^[A-Za-z]+', '_')
+                    this.hiddenWord = this.word.replace(/^[A-Za-z]+/, '_')      // TODO: questa regex non funziona correttamente
                 },
             })
         })
